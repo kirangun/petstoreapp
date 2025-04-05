@@ -26,7 +26,7 @@
         <applicationinsights.version>2.6.4</applicationinsights.version>
         <azure-active-directory.version>2.2.4</azure-active-directory.version>
         <spring-cloud-azure-starter.version>4.6.0</spring-cloud-azure-starter.version>
-        <commons-lang3.version>3.12.0</commons-lang3.version>
+        <commons-lang3.version>3.12.0</commons-lang3.version> 
     </properties>
 
     <dependencies>
