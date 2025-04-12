@@ -11,7 +11,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>com.chtrembl.petstoreapp</groupId>
+    <groupId>com.chtrembl.petstoreapp</groupId> 
     <artifactId>petstoreapp</artifactId>
     <packaging>jar</packaging>
     <name>petstoreapp</name>
