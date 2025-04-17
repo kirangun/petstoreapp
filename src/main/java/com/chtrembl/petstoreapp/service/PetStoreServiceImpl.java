@@ -151,7 +151,9 @@ public class PetStoreServiceImpl implements PetStoreService {
 				products = products.stream().filter(product -> category.equals(product.getCategory().getName())
 						&& product.getTags().toString().contains("small")).collect(Collectors.toList());
 			}
-			this.sessionUser.getTelemetryClient().trackMetric("Number of items returned to the user", products.size());
+
+			//this.sessionUser.getTelemetryClient().trackMetric("Number of items returned to the user", products.size());
+			logger.info("Number of items returned to the user "+ products.size());
 			return products;
 		} catch (
 
