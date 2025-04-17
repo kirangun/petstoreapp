@@ -138,7 +138,7 @@ public class PetStoreServiceImpl implements PetStoreService {
 			// to show Telemetry with APIM requests (normally this would be cached in a real
 			// world production scenario)
 			this.sessionUser.getTelemetryClient().trackEvent(
-					String.format("PetStoreApp user %s is requesting to update an order with the PetStoreOrderService",
+					String.format("PetStoreApp user %s  is trying to fetch the products",
 							this.sessionUser.getName(), this.sessionUser.getCustomEventProperties(), null));
 			this.sessionUser.setProducts(products);
 
