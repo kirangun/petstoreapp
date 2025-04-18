@@ -178,7 +178,7 @@ public class PetStoreServiceImpl implements PetStoreService {
 			product.setId((long) 0);
 			products.add(product);
 		} catch (Exception e) {
-			logger.info("exception occured while retrieving products");
+			logger.info(e.getMessage());
         }
         return products;
 	}
