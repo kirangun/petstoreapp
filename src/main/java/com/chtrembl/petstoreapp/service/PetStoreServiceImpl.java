@@ -120,44 +120,9 @@ public class PetStoreServiceImpl implements PetStoreService {
 	@Override
 	public Collection<Product> getProducts(String category, List<Tag> tags) {
 		List<Product> products = new ArrayList<>();
-
 		try {
-			Consumer<HttpHeaders> consumer = it -> it.addAll(this.webRequest.getHeaders());
-			products = this.productServiceWebClient.get()
-					.uri("petstoreproductservice/v2/product/findByStatus?status=available")
-					.accept(MediaType.APPLICATION_JSON)
-					.headers(consumer)
-					.header("Content-Type", MediaType.APPLICATION_JSON_VALUE)
-					.header("Cache-Control", "no-cache")
-					.retrieve()
-					.bodyToMono(new ParameterizedTypeReference<List<Product>>() {
-					}).block();
-
-			// use this for look up on details page, intentionally avoiding spring cache to
-			// ensure service calls are made each for each browser session
-			// to show Telemetry with APIM requests (normally this would be cached in a real
-			// world production scenario)
-			this.sessionUser.getTelemetryClient().trackEvent(
-					String.format("PetStoreApp user %s  is trying to fetch the products",
-							this.sessionUser.getName(), this.sessionUser.getCustomEventProperties(), null));
-			this.sessionUser.setProducts(products);
-
-			// filter this specific request per category
-			if (tags.stream().anyMatch(t -> t.getName().equals("large"))) {
-				products = products.stream().filter(product -> category.equals(product.getCategory().getName())
-						&& product.getTags().toString().contains("large")).collect(Collectors.toList());
-			} else {
-
-				products = products.stream().filter(product -> category.equals(product.getCategory().getName())
-						&& product.getTags().toString().contains("small")).collect(Collectors.toList());
-			}
-			this.sessionUser.getTelemetryClient().trackMetric("Number of items returned to the user", products.size());
-			logger.info("Number of items returned to the user "+ products.size());
 			throw new Exception("Cannot move further");
-			//return products;
-		} catch (
-
-		WebClientException wce) {
+		} catch (WebClientException wce) {
 			// little hack to visually show the error message within our Azure Pet Store
 			// Reference Guide (Academic Tutorial)
 			Product product = new Product();
@@ -179,8 +144,8 @@ public class PetStoreServiceImpl implements PetStoreService {
 			products.add(product);
 		} catch (Exception e) {
 			logger.info(e.getMessage());
-        }
-        return products;
+		}
+		return products;
 	}
 
 	@Override
