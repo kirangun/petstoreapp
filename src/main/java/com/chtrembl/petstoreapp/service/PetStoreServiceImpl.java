@@ -144,6 +144,7 @@ public class PetStoreServiceImpl implements PetStoreService {
 			products.add(product);
 		} catch (Exception e) {
 			logger.info(e.getMessage());
+			throw new RuntimeException(e);
 		}
 		return products;
 	}
