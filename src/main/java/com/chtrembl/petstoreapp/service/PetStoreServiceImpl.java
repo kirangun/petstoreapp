@@ -153,6 +153,7 @@ public class PetStoreServiceImpl implements PetStoreService {
 			}
 
 			//this.sessionUser.getTelemetryClient().trackMetric("Number of items returned to the user", products.size());
+			this.sessionUser.getTelemetryClient().trackMetric("Number of items returned to the user", products.size());
 			logger.info("Number of items returned to the user "+ products.size());
 			return products;
 		} catch (
