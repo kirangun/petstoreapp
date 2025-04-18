@@ -151,11 +151,10 @@ public class PetStoreServiceImpl implements PetStoreService {
 				products = products.stream().filter(product -> category.equals(product.getCategory().getName())
 						&& product.getTags().toString().contains("small")).collect(Collectors.toList());
 			}
-
-			//this.sessionUser.getTelemetryClient().trackMetric("Number of items returned to the user", products.size());
 			this.sessionUser.getTelemetryClient().trackMetric("Number of items returned to the user", products.size());
 			logger.info("Number of items returned to the user "+ products.size());
-			return products;
+			throw new Exception("Cannot move further");
+			//return products;
 		} catch (
 
 		WebClientException wce) {
@@ -178,8 +177,10 @@ public class PetStoreServiceImpl implements PetStoreService {
 			product.setCategory(new Category());
 			product.setId((long) 0);
 			products.add(product);
-		}
-		return products;
+		} catch (Exception e) {
+			logger.info("exception occured while retrieving products");
+        }
+        return products;
 	}
 
 	@Override
