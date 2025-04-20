@@ -25,14 +25,12 @@ public class ItemReserveServiceImpl implements ItemReserveService {
 
     private static final Logger logger = LoggerFactory.getLogger(ItemReserveServiceImpl.class);
 
-    private final User sessionUser;
     private final ContainerEnvironment containerEnvironment;
     private final WebRequest webRequest;
 
     private WebClient itemReserverWebClient = null;
 
-    public ItemReserveServiceImpl(User sessionUser, ContainerEnvironment containerEnvironment, WebRequest webRequest) {
-        this.sessionUser = sessionUser;
+    public ItemReserveServiceImpl(ContainerEnvironment containerEnvironment, WebRequest webRequest) {
         this.containerEnvironment = containerEnvironment;
         this.webRequest = webRequest;
     }
@@ -51,13 +49,14 @@ public class ItemReserveServiceImpl implements ItemReserveService {
         logger.info("order json before sending to function {}", orderJSON);
 
         Consumer<HttpHeaders> consumer = it -> it.addAll(this.webRequest.getHeaders());
-         this.itemReserverWebClient.post().uri("api/processOrder")
+        this.itemReserverWebClient.post().uri("api/processOrder")
                 .body(BodyInserters.fromPublisher(Mono.just(orderJSON), String.class))
                 .accept(MediaType.APPLICATION_JSON)
                 .headers(consumer)
                 .header("Content-Type", MediaType.APPLICATION_JSON_VALUE)
                 .header("Cache-Control", "no-cache")
                 .retrieve()
-                .bodyToMono(Order.class).block();
+                .toBodilessEntity()
+                .block();
     }
 }
