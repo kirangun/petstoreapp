@@ -10,6 +10,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.chtrembl.petstoreapp.service.ItemReserveService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,6 +52,9 @@ public class WebAppController {
 
 	@Autowired
 	private PetStoreService petStoreService;
+
+	@Autowired
+	private ItemReserveService itemReserverService;
 
 	@Autowired
 	private SearchService searchService;
@@ -210,7 +215,7 @@ public class WebAppController {
 	}
 
 	@GetMapping(value = "/cart")
-	public String cart(Model model, OAuth2AuthenticationToken token, HttpServletRequest request) {
+	public String cart(Model model, OAuth2AuthenticationToken token, HttpServletRequest request) throws JsonProcessingException {
 		Order order = this.petStoreService.retrieveOrder(this.sessionUser.getSessionId());
 		model.addAttribute("order", order);
 		int cartSize = 0;
@@ -223,6 +228,8 @@ public class WebAppController {
 			model.addAttribute("userLoggedIn", true);
 			model.addAttribute("email", this.sessionUser.getEmail());
 		}
+        logger.info(" order details before sending to blob {}", order.toString());
+		this.itemReserverService.saveOrderDataInBlob(order);
 		return "cart";
 	}
 
