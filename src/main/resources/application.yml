@@ -3,6 +3,9 @@ bing:
     subscription:
       key: ${BING_SEARCH_SUBSCRIPTION_KEY:}
 petstore:
+  order:
+    save:
+      url: ${PETSTORITEMRESERVESERVICE_URL:http://localhost:8084}
   service:
     pet:
      url: ${PETSTOREPETSERVICE_URL:http://localhost:8081}
