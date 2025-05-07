@@ -39,16 +39,3 @@ spring:
     cache: false
   cache:
     cache-names: currentUsers
-  cloud:
-    azure:
-      active-directory:
-        b2c:
-          enabled: true
-          base-uri: ${AZ_BASE_URI:}
-          credential:
-            client-id: ${AZ_CLIENT_ID:}
-            client-secret: ${AZ_CLIENT_SECRET:}
-          login-flow: sign-up-or-sign-in
-          user-flows:
-            sign-up-or-sign-in: B2C_1_signupsignin
-          user-name-attribute-name: name
